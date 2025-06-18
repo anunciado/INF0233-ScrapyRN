@@ -80,10 +80,9 @@ async def coletar_dados():
                             colunas[2].get_text(strip=True),  # Modalidade
                             colunas[3].get_text(strip=True),  # Objeto
                             colunas[4].get_text(strip=True),  # Situação
-                            colunas[5].get_text(strip=True),  # Valor estimado
-                            colunas[6].get_text(strip=True)  # Unidade gestora
+                            colunas[5].get_text(strip=True),  # Valor
+                            colunas[6].get_text(strip=True)   # Órgão
                         ])
-                break
                 # Próxima página → /searh/Licitacao/Paginados?pagina=N
                 proxima_url = f"{BASE_URL}/searh/Licitacao/Paginados?pagina={pagina + 1}"
                 await page.goto(proxima_url)
@@ -99,8 +98,8 @@ async def coletar_dados():
         'Modalidade',
         'Objeto',
         'Situação',
-        'Valor estimado',
-        'Unidade gestora'
+        'Valor',
+        'Órgão'
     ]
     df = pd.DataFrame(dados, columns=colunas)
     df.to_csv("licitacoes_rn.csv", index=False, encoding='utf-8-sig')
