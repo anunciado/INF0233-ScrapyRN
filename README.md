@@ -47,6 +47,21 @@ playwright install
 python main.py
 ```
 
+## Licença de uso e fontes dos dados
+
+### Dados de Receitas
+Os dados de receitas públicas do Estado do Rio Grande do Norte são obtidos através do portal da transparência oficial disponível em: http://www.transparencia.rn.gov.br/receita
+
+Estes dados são disponibilizados sob a licença Creative Commons Atribuição 4.0 Internacional (CC BY 4.0): https://creativecommons.org/licenses/by/4.0/?ref=chooser-v1
+
+### Dados de Licitações  
+Os dados de licitações são extraídos do Sistema Eletrônico de Administração de Recursos Humanos (SEARH) através do portal: http://servicos.searh.rn.gov.br/searh/Licitacao
+
+Embora não possuam licença explícita, a transparência destes dados é assegurada pela Lei Complementar Estadual Nº 695, de 18 de janeiro de 2022, que atesta a transparência dos dados das receitas, gastos e ações públicas do Estado do Rio Grande do Norte. Documento disponível em: http://adcon.rn.gov.br/ACERVO/gac/DOC/DOC000000000278920.PDF
+
+### Uso dos Dados
+Este projeto utiliza os dados exclusivamente para fins educacionais e de pesquisa acadêmica, respeitando os princípios de transparência e acesso à informação pública estabelecidos pela legislação vigente.
+
 ## Contribuição:
 
 1. `Mova` a issue a ser resolvida para a coluna _In Progress_ no [board do projeto].  
