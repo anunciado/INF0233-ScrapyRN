@@ -9,6 +9,102 @@ class TransformadorLicitacoesRN:
         self.DADOS_LIMPOS_DIR = os.path.join("dados_limpos", "licitacao")
         self.ARQUIVO_ENTRADA = "dados_brutos/licitacao/licitacoes_rn_raw.csv"
         os.makedirs(self.DADOS_LIMPOS_DIR, exist_ok=True)
+        
+        self.orgao_categoria = {
+            # ADMINISTRAÇÃO
+            'SEARH': 'ADMINISTRAÇÃO',  # Secretaria de Administração e RH
+            'SET': 'ADMINISTRAÇÃO',     # Secretaria de Tributação
+            'GAC': 'ADMINISTRAÇÃO',     # Gabinete Civil
+            'SEPLAN': 'ADMINISTRAÇÃO',  # Secretaria de Planejamento
+            'CONTROL': 'ADMINISTRAÇÃO', # Controladoria Geral
+            'GVG': 'ADMINISTRAÇÃO',     # Governadoria
+            'ASSECOM': 'ADMINISTRAÇÃO', # Assessoria de Comunicação
+            
+            # AGRICULTURA
+            'SEARA': 'AGRICULTURA',     # Secretaria de Agricultura
+            'EMATER': 'AGRICULTURA',    # Empresa de Assistência Técnica Rural
+            'IDIARN': 'AGRICULTURA',    # Instituto de Irrigação
+            'CEASA': 'AGRICULTURA',     # Central de Abastecimento
+            
+            # ASSISTÊNCIA SOCIAL
+            'SETHAS': 'ASSISTÊNCIA SOCIAL',  # Secretaria do Trabalho, Habitação e Assistência Social
+            'FUNDASE': 'ASSISTÊNCIA SOCIAL', # Fundação Socioeducativa
+            
+            # CIÊNCIA E TECNOLOGIA
+            'ITEP': 'CIÊNCIA E TECNOLOGIA',  # Instituto Técnico-Científico de Perícia
+            'FAPERN': 'CIÊNCIA E TECNOLOGIA', # Fundação de Apoio à Pesquisa
+            'IPERN': 'CIÊNCIA E TECNOLOGIA',  # Instituto de Perícia
+            'DATANORTE': 'CIÊNCIA E TECNOLOGIA', # Empresa de Tecnologia da Informação
+            'DEI': 'CIÊNCIA E TECNOLOGIA',    # Departamento de Estatísticas
+            
+            # COMÉRCIO E SERVIÇOS
+            'SETUR': 'COMÉRCIO E SERVIÇOS',  # Secretaria de Turismo
+            'EMPROTUR': 'COMÉRCIO E SERVIÇOS', # Empresa de Turismo
+            'JUCERN': 'COMÉRCIO E SERVIÇOS',  # Junta Comercial
+            'IPEM': 'COMÉRCIO E SERVIÇOS',    # Instituto de Pesos e Medidas
+            'DETRAN': 'COMÉRCIO E SERVIÇOS',  # Departamento de Trânsito
+            
+            # CULTURA
+            'FJA': 'CULTURA',             # Fundação José Augusto (Cultura)
+            'SEEL': 'CULTURA',            # Secretaria de Esporte e Lazer
+            
+            # DIREITOS DA CIDADANIA
+            'SESED': 'DIREITOS DA CIDADANIA', # Secretaria de Segurança Pública
+            'CORPO BOMBEIRO': 'DIREITOS DA CIDADANIA', # Corpo de Bombeiros
+            'PM-DS': 'DIREITOS DA CIDADANIA', # Polícia Militar
+            'PM-QCG': 'DIREITOS DA CIDADANIA', # Polícia Militar
+            'PCRN': 'DIREITOS DA CIDADANIA',  # Polícia Civil
+            'SAPE': 'DIREITOS DA CIDADANIA',  # Secretaria de Administração Penitenciária
+            'SEDEC': 'DIREITOS DA CIDADANIA', # Defesa Civil
+            
+            # ENCARGOS ESPECIAIS
+            'ARSEP': 'ENCARGOS ESPECIAIS',  # Agência Reguladora de Serviços
+            'CAERN': 'ENCARGOS ESPECIAIS',  # Companhia de Águas e Esgotos
+            'AGNRN': 'ENCARGOS ESPECIAIS',  # Agência Reguladora
+            
+            # ENERGIA
+            'POTIGÁS': 'ENERGIA',  # Companhia de Gás
+            
+            # EDUCAÇÃO
+            'SEEC': 'EDUCAÇÃO',  # Secretaria de Educação
+            
+            # GESTÃO AMBIENTAL
+            'IDEMA': 'GESTÃO AMBIENTAL',  # Instituto de Desenvolvimento Sustentável
+            'SEMARH': 'GESTÃO AMBIENTAL', # Secretaria de Meio Ambiente
+            
+            # JUDICIÁRIA
+            'PGE': 'JUDICIÁRIA',          # Procuradoria Geral do Estado
+            'SEJUC': 'JUDICIÁRIA',        # Secretaria de Justiça e Cidadania
+            'DEFENSORIA': 'JUDICIÁRIA',   # Defensoria Pública
+            
+            # SAÚDE
+            'SESAP': 'SAÚDE',        # Secretaria de Saúde
+            'HMAF': 'SAÚDE',         # Hospital Militar
+            'HGT': 'SAÚDE',          # Hospital Giselda Trigueiro
+            'LACEN': 'SAÚDE',        # Laboratório Central
+            'HDBC': 'SAÚDE',         # Hospital Dr. João Machado
+            'HMWG': 'SAÚDE',         # Hospital Monsenhor Walfredo Gurgel
+            'HRDML': 'SAÚDE',        # Hospital Regional Deoclécio Marques
+            'HJM': 'SAÚDE',          # Hospital Juvino Barreto
+            'HJPB': 'SAÚDE',         # Hospital João Pessoa
+            'HCCA': 'SAÚDE',         # Hospital da Criança
+            'HRF': 'SAÚDE',          # Hospital Regional de Fruturos
+            'HRTVM': 'SAÚDE',        # Hospital Regional Tarcísio Maia
+            'HRCNOVOS': 'SAÚDE',     # Hospital Regional de Nova Cruz
+            'HRA': 'SAÚDE',          # Hospital Regional do Assú
+            'HRHMM': 'SAÚDE',        # Hospital Regional de Mossoró
+            'HMPMC': 'SAÚDE',        # Hospital de Pediatria
+            'HEMORM': 'SAÚDE',       # Hemocentro
+            'HROGS': 'SAÚDE',        # Hospital de Ortopedia
+            'HRSPP': 'SAÚDE',        # Hospital Regional de Pau dos Ferros
+            'HRPGOS': 'SAÚDE',       # Hospital Regional de Goianinha
+            'II URSAP': 'SAÚDE',     # Unidade Regional de Saúde
+            'HPVS': 'SAÚDE',         # Hospital de Pau dos Ferros
+        }
+
+    def obter_categoria(self, orgao):
+        """Retorna a categoria do órgão com base no mapeamento."""
+        return self.orgao_categoria.get(orgao, 'NÃO CLASSIFICADO')
 
     def limpar_td(self, texto):
         if pd.isna(texto):
@@ -65,6 +161,9 @@ class TransformadorLicitacoesRN:
         df['Órgão'] = df['Órgão'].map(self.limpar_td)
         df['Link Aviso'] = df['Aviso'].map(self.extrair_link)
         df['Link Contrato'] = df['Contrato'].map(self.extrair_link)
+        
+        # Adiciona a nova coluna Categoria
+        df['Categoria'] = df['Órgão'].map(self.obter_categoria)
 
         # Filtrar: mantém apenas linhas com Processo numérico e Ano não vazio
         df = df[df['Processo'].str.match(r'^\d+$')]
@@ -72,7 +171,7 @@ class TransformadorLicitacoesRN:
 
         # Remove colunas antigas e reorganiza
         df = df[
-            ['Número', 'Ano', 'Processo', 'Modalidade', 'Objeto', 'Situação', 'Valor', 'Órgão', 'Link Aviso',
+            ['Número', 'Ano', 'Processo', 'Modalidade', 'Objeto', 'Situação', 'Valor', 'Órgão', 'Categoria', 'Link Aviso',
              'Link Contrato']]
         
         # Salva o arquivo transformado

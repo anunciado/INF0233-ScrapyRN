@@ -198,6 +198,7 @@ O banco de dados pode ser acessado diretamente através de qualquer cliente SQLi
 | situacao       | Texto         | Situação atual da licitação (e.g., Aberta, Em Andamento, Concluída, Cancelada).                 | "Aberta"                                                   |
 | valor          | Numérico      | Valor efetivamente adjudicado ao vencedor da licitação.                                         | 14500000                                                   |
 | orgao          | Texto         | Nome do orgão que realizou a licitação.                                                         | SEARH                                                      |
+| categoria      | Texto         | Categoria do orgão que realizou a licitação.                                                    | EDUCAÇÃO                                                   |
 | link_edital    | URL           | Endereço eletrônico para acesso ao edital da licitação.                                         | "http://servicos.searh.rn.gov.br/edital/PE_01_2025.pdf"    |
 | link_resultado | URL           | Endereço eletrônico para acesso ao resultado da licitação.                                      | "http://servicos.searh.rn.gov.br/resultado/PE_01_2025.pdf" |
 

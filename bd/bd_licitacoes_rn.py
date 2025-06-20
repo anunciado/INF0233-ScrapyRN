@@ -24,6 +24,7 @@ class BDLicitacoesRN:
                 situacao TEXT,
                 valor REAL,
                 orgao TEXT,
+                categoria TEXT,
                 link_aviso TEXT,
                 link_contrato TEXT,
                 data_insercao TEXT
@@ -67,6 +68,7 @@ class BDLicitacoesRN:
                     row['Situação'],
                     self.converter_valor(row['Valor']),
                     row['Órgão'],
+                    row['Categoria'],
                     row['Link Aviso'],
                     row['Link Contrato'],
                     datetime.now().strftime('%Y-%m-%d %H:%M:%S')
@@ -76,8 +78,8 @@ class BDLicitacoesRN:
                 self.cursor.execute('''
                     INSERT INTO licitacao (
                         numero, ano, processo, modalidade, objeto, 
-                        situacao, valor, orgao, link_aviso, link_contrato, data_insercao
-                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                        situacao, valor, orgao, categoria, link_aviso, link_contrato, data_insercao
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 ''', data)
 
         self.conn.commit()
