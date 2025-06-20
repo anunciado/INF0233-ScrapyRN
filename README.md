@@ -47,7 +47,7 @@ playwright install
 python main.py
 ```
 
-# Arquitetura Geral
+## Arquitetura Geral
 
 Rastreador de Licitações / Rastreador de Receitas ➞ Transformação ➞ SQLite
 
