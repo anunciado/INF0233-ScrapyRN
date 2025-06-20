@@ -149,9 +149,9 @@ Embora não possuam licença explícita, a transparência destes dados é assegu
 ### Uso dos Dados
 Este projeto utiliza os dados exclusivamente para fins educacionais e de pesquisa acadêmica, respeitando os princípios de transparência e acesso à informação pública estabelecidos pela legislação vigente.
 
-## Dataset Limpo para Análise de Dados
+## Dataset Limpo
 
-O projeto disponibiliza um dataset estruturado no arquivo `dados_rn.db`, que contém os dados de licitações e receitas do estado do Rio Grande do Norte já processados e limpos. Este arquivo é um dump do banco de dados SQLite que armazena as informações coletadas e transformadas pelo sistema.
+O projeto disponibiliza um dataset estruturado no arquivo [dados_rn.db](dados_rn.db), que contém os dados de licitações e receitas do estado do Rio Grande do Norte já processados e limpos. Este arquivo é um dump do banco de dados SQLite que armazena as informações coletadas e transformadas pelo sistema.
 
 **Características do dataset:**
 - **Formato:** SQLite Database (.db)
@@ -161,7 +161,22 @@ O projeto disponibiliza um dataset estruturado no arquivo `dados_rn.db`, que con
 
 O banco de dados pode ser acessado diretamente através de qualquer cliente SQLite ou por meio de código Python utilizando a biblioteca `sqlite3`.
 
-## Contribuição:
+## Análise de Dados
+
+Uma análise exploratória completa dos dados extraídos está disponível em um notebook Jupyter hospedado no Google Colab:
+
+🔗 **[Análise Exploratória dos Dados - RN](https://colab.research.google.com/drive/1yVFTeSyPSNSzcpiF32rTHaUkqgdIaNn1?usp=sharing)**
+
+O notebook contém:
+- **Exploração dos dados** de licitações e receitas
+- **Visualizações interativas** dos principais indicadores
+- **Análises estatísticas** dos valores e distribuições
+- **Insights** sobre os padrões encontrados nos dados públicos
+- **Gráficos e métricas** para compreensão dos dados coletados
+
+Para executar a análise localmente, você pode fazer o download do notebook e executá-lo em seu ambiente Python com as dependências instaladas.
+
+## Contribuição
 
 1. `Mova` a issue a ser resolvida para a coluna _In Progress_ no [board do projeto].  
 2. `Clone` este repositório https://github.com/anunciado/INF0233-ScrapyRN.git.
