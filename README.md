@@ -47,7 +47,7 @@ playwright install
 python main.py
 ```
 
-## Fluxo de Execução
+## Diagrama Resumido da Pipeline
 
 ```mermaid
 ---
@@ -88,6 +88,7 @@ flowchart TB
      Middleware:::network
      Parser:::processing
      Parser:::external
+     n2:::network
      ExternalSite:::external
      n3:::processing
      n4:::storage
@@ -96,11 +97,11 @@ flowchart TB
      n6:::network
      Scheduler:::network
      Storage:::storage
-    classDef network fill:#ADD8E6,stroke:#333,stroke-width:1px
     classDef processing fill:#90EE90,stroke:#333,stroke-width:1px
     classDef storage fill:#FFD700,stroke:#333,stroke-width:1px
     classDef config fill:#D8BFD8,stroke:#333,stroke-width:1px
     classDef external fill:#D3D3D3, stroke:#333, stroke-width:1px
+    classDef network fill:#ADD8E6, stroke:#333, stroke-width:1px
     style Spider color:#000000
     style Middleware color:#000000
     style Parser color:#000000
