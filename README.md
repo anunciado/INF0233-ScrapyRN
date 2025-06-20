@@ -12,7 +12,8 @@ Uma ferramenta para extrair informações de licitações e receitas do estado d
  - Beautiful Soup, uma biblioteca para extrair dados de arquivos HTML e XML;
  - NumPy, uma biblioteca para cálculos númericos;
  - Pandas, uma biblioteca de análise e manipulação de dados;
- - Playwright, um framework para testes e automação na Web.
+ - Playwright, um framework para testes e automação na Web;
+ - SQLite, uma biblioteca para ter acesso a banco de dados SQL sem executar um processo SGBD separado.
 
 ## Configuração do ambiente de desenvolvimento
 
