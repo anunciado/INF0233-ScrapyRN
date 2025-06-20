@@ -1,109 +1,101 @@
 import asyncio
-from playwright.async_api import async_playwright
-from bs4 import BeautifulSoup
-import pandas as pd
 
-ANOS = {
-    "27": "2025",
-    "26": "2024",
-    "25": "2023",
-    "24": "2022",
-    "23": "2021",
-    "22": "2020",
-    "21": "2019",
-    "20": "2018",
-    "18": "2017",
-    "17": "2016",
-    "16": "2015",
-    "15": "2014",
-    "14": "2013",
-    "13": "2012",
-    "12": "2011",
-    "11": "2010",
-    "10": "2009",
-    "9": "2008",
-    "8": "2007",
-    "7": "2006",
-    "6": "2005",
-    "5": "2004",
-    "4": "2003",
-    "3": "2002",
-    "2": "2001",
-    "1": "2000",
-}
+from bd.bd_licitacoes_rn import BDLicitacoesRN
+from bd.bd_receitas_rn import BDReceitasRN
+from extrator.extrator_receitas_rn import ExtratorReceitasRN
+from extrator.extrator_licitacoes_rn import ExtratorLicitacoesRN
+from transformador.transformador_licitacoes_rn import TransformadorLicitacoesRN
+from transformador.transformador_receitas_rn import TransformadorReceitasRN
 
-BASE_URL = "http://servicos.searh.rn.gov.br"
-
-async def coletar_dados():
-    dados = []
-
-    async with async_playwright() as p:
-        browser = await p.chromium.launch(headless=True)
-        page = await browser.new_page()
-
-        for value, ano in ANOS.items():
-            print(f"Coletando ano {ano} (value={value})...")
-            await page.goto(f"{BASE_URL}/searh/Licitacao")
-
-            await page.select_option("select#Idanolicitacao", value)
-            await page.click("button.btn.btn-primary:has-text('Consultar')")
-
-            pagina = 1
-            while True:
-                print(f"  → Página {pagina}")
-                html = await page.content()
-                soup = BeautifulSoup(html, 'html.parser')
-
-                if soup.find('h4', string='Nenhum resultado encontrado.'):
-                    print(f"    Nenhum resultado encontrado na página {pagina}. Encerrando o ano {ano}.")
-                    break
-
-                tabela = soup.find('table', class_='table')
-                if not tabela:
-                    break
-
-                linhas = tabela.find_all('tr')[1:]  # Ignora cabeçalho
-                for linha in linhas:
-                    colunas = linha.find_all('td')
-                    if len(colunas) >= 7:
-                        numero_ano = colunas[0].get_text(strip=True)
-                        if '/' in numero_ano:
-                            numero, ano_extr = [x.strip() for x in numero_ano.split('/', 1)]
-                        else:
-                            numero = numero_ano
-                            ano_extr = ano
-
-                        dados.append([
-                            numero,
-                            ano_extr,
-                            colunas[1].get_text(strip=True),  # Processo
-                            colunas[2].get_text(strip=True),  # Modalidade
-                            colunas[3].get_text(strip=True),  # Objeto
-                            colunas[4].get_text(strip=True),  # Situação
-                            colunas[5].get_text(strip=True),  # Valor
-                            colunas[6].get_text(strip=True)   # Órgão
-                        ])
-                # Próxima página → /searh/Licitacao/Paginados?pagina=N
-                proxima_url = f"{BASE_URL}/searh/Licitacao/Paginados?pagina={pagina + 1}"
-                await page.goto(proxima_url)
-                pagina += 1
-
-        await browser.close()
-
-    # Salvar CSV
-    colunas = [
-        'Número',
-        'Ano',
-        'Processo',
-        'Modalidade',
-        'Objeto',
-        'Situação',
-        'Valor',
-        'Órgão'
-    ]
-    df = pd.DataFrame(dados, columns=colunas)
-    df.to_csv("licitacoes_rn.csv", index=False, encoding='utf-8-sig')
-    print("\nArquivo CSV salvo com sucesso!")
+async def executar_extracao(extrator, nome_processo):
+    """
+    Executa o processo de extração de dados.
+    
+    Args:
+        extrator: Instância do extrator a ser executado
+        nome_processo: Nome do processo de extração para logging
+    """
+    print(f"\n📊 Iniciando extração de {nome_processo}...")
+    try:
+        await extrator.extrair_dados()
+        print(f"✅ Coleta de {nome_processo} finalizada com sucesso!")
+    except Exception as e:
+        print(f"❌ Erro na extração de {nome_processo}: {str(e)}")
 
 
-asyncio.run(coletar_dados())
+def executar_transformacao(transformador, nome_processo):
+    """
+    Executa o processo de transformação dos dados.
+
+    Args:
+        extrator: Instância do extrator que contém os dados a serem transformados
+        nome_processo: Nome do processo para logging
+    """
+    print(f"\n🔄 Iniciando transformação dos dados de {nome_processo}...")
+    try:
+        transformador.transformar_dados()
+        print(f"✅ Transformação de {nome_processo} finalizada com sucesso!")
+    except Exception as e:
+        print(f"❌ Erro na transformação de {nome_processo}: {str(e)}")
+
+
+def executar_carregamento(carregador, nome_processo):
+    """
+    Executa o processo de carregamento dos dados.
+
+    Args:
+        carregador: Instância do bd que contém os dados a serem carregados
+        nome_processo: Nome do processo para logging
+    """
+    print(f"\n🔄 Iniciando carregamento dos dados de {nome_processo}...")
+    try:
+        carregador.carregar_dados()
+        print(f"✅ Carregamento de {nome_processo} finalizada com sucesso!")
+    except Exception as e:
+        print(f"❌ Erro no carregamento de {nome_processo}: {str(e)}")
+
+async def main():
+    """
+    Função principal que coordena a extração, transformação e bd dos dados de licitações e receitas do RN.
+    """
+    print("🚀 Iniciando extração de dados...")
+    
+    # Extração de receitas
+    extrator_receitas = ExtratorReceitasRN()
+    await executar_extracao(extrator_receitas, "receitas")
+
+    # Extração de licitações
+    extrator_licitacoes = ExtratorLicitacoesRN()
+    await executar_extracao(extrator_licitacoes, "licitações")
+
+    print("\n✨ Processo de extração finalizado!")
+    print("🚀 Iniciando transformação dos dados...")
+
+    # Transformação de receitas
+    transformador_receitas = TransformadorReceitasRN()
+    executar_transformacao(transformador_receitas, "receitas")
+
+    # Transformação de licitações
+    transformador_licitacoes = TransformadorLicitacoesRN()
+    executar_transformacao(transformador_licitacoes, "licitações")
+
+    print("\n✨ Processo de transformação finalizado!")
+    print("🚀 Iniciando carregamento de dados...")
+
+    # Carregamento de receitas
+    bd_receitas = BDReceitasRN()
+    try:
+        executar_carregamento(bd_receitas, "receitas")
+    finally:
+        bd_receitas.close()
+
+    # Carregamento de licitações
+    bd_licitacoes = BDLicitacoesRN()
+    try:
+        executar_carregamento(bd_licitacoes, "licitações")
+    finally:
+        bd_licitacoes.close()
+
+    print("\n✨ Processo de carregamento finalizado!")
+if __name__ == "__main__":
+    asyncio.run(main())  # Executando o loop de eventos assíncrono
