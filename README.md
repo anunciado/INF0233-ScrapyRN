@@ -80,10 +80,12 @@ flowchart TB
     n4 -- "<span style=color:>Armazenar Item</span>" --> Storage
     Parser -- "<span style=color:>Transforma em Arquivo .CSV</span>" --> n6
     n6 -- <br> --> Validate
+    n7["Text Block"]
     n2@{ shape: rect}
     n3@{ shape: rect}
     n4@{ shape: rect}
     n6@{ shape: rect}
+    n7@{ shape: text}
      Spider:::network
      Middleware:::network
      Parser:::processing
@@ -101,9 +103,9 @@ flowchart TB
     classDef storage fill:#FFD700,stroke:#333,stroke-width:1px
     classDef config fill:#D8BFD8,stroke:#333,stroke-width:1px
     classDef external fill:#D3D3D3, stroke:#333, stroke-width:1px
-    style Spider fill:#BBDEFB
     style n2 fill:#BBDEFB
-    style Scheduler fill:#BBDEFB
+    style Scheduler color:#000000
+    style n7 color:#000000
 ```
 
 ## Licença de uso e fontes dos dados
