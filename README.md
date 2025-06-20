@@ -60,7 +60,7 @@ flowchart TB
         Spider["Rastreador de Licitações"]
         Middleware["Download de Arquivo"]
         Parser["Parser"]
-        n2@{ label: "<span style=\"background-color:\">Rastreador de Receitas</span>" }
+        n2@{ label: "<span style=\"color:#000000\">Rastreador de Receitas</span>" }
         ExternalSite["Buscar Token ao Acessar Site da Tranparência"]
         n3["Transformar"]
         n4["Persistir"]
