@@ -137,14 +137,22 @@ flowchart TB
 ## Licença de uso e fontes dos dados
 
 ### Dados de Receitas
-Os dados de receitas públicas do Estado do Rio Grande do Norte são obtidos através do portal da transparência oficial disponível em: http://www.transparencia.rn.gov.br/receita
 
-Estes dados são disponibilizados sob a licença Creative Commons Atribuição 4.0 Internacional (CC BY 4.0): https://creativecommons.org/licenses/by/4.0/?ref=chooser-v1
+- **Fonte de Dados**: SIGEF - Sistema Integrado De Planejamento E Gestão Fiscal
+- **Gestor**: Secretaria de Estado de Planejamento e Finanças - SEPLAN
+- **Site**: [http://www.transparencia.rn.gov.br/receita](http://www.transparencia.rn.gov.br/receita)
+- **Licença
+  **: [Creative Commons Atribuição 4.0 Internacional (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/?ref=chooser-v1)
 
 ### Dados de Licitações  
-Os dados de licitações são extraídos do Sistema Eletrônico de Administração de Recursos Humanos (SEARH) através do portal: http://servicos.searh.rn.gov.br/searh/Licitacao
 
-Embora não possuam licença explícita, a transparência destes dados é assegurada pela Lei Complementar Estadual Nº 695, de 18 de janeiro de 2022, que atesta a transparência dos dados das receitas, gastos e ações públicas do Estado do Rio Grande do Norte. Documento disponível em: http://adcon.rn.gov.br/ACERVO/gac/DOC/DOC000000000278920.PDF
+- **Fonte de Dados**: Tabela de dados de Portal de Licitações do Governo do RN
+- **Gestor**: Secretaria do Estado de Administração - SEAD
+- **Site**: [servicos.searh.rn.gov.br/searh/Licitacao](http://servicos.searh.rn.gov.br/searh/Licitacao)
+- **Licença**: Embora não possuam licença explícita, a transparência destes dados é assegurada pela Lei Complementar
+  Estadual Nº 695, de 18 de janeiro de 2022, que atesta a transparência dos dados das receitas, gastos e ações públicas
+  do Estado do Rio Grande do Norte. Documento disponível
+  no [link](http://adcon.rn.gov.br/ACERVO/gac/DOC/DOC000000000278920.PDF).
 
 ### Uso dos Dados
 Este projeto utiliza os dados exclusivamente para fins educacionais e de pesquisa acadêmica, respeitando os princípios de transparência e acesso à informação pública estabelecidos pela legislação vigente.
@@ -160,6 +168,38 @@ O projeto disponibiliza um dataset estruturado no arquivo [dados_rn.db](dados_rn
 - **Data de geração:** 19/06/2025
 
 O banco de dados pode ser acessado diretamente através de qualquer cliente SQLite ou por meio de código Python utilizando a biblioteca `sqlite3`.
+
+# Dicionário de Dados
+
+### Dados de Saída de Receitas
+
+| Nome do Campo              | Tipo de Dados | Descrição                                                                                                                                                                                                                                             | Exemplo                                             |
+|----------------------------|---------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------|
+| Código                     | Texto         | Código vinculado a receita.                                                                                                                                                                                                                           | "1.1.1.8.01.2.1.01"                                 |
+| Categoria                  | Texto         | Classificação detalhada da receita, dividida em duas, corrente e de capital.                                                                                                                                                                          | "Deduções da Receita"                               |
+| Espécie                    | Texto         | Classificação vinculado à Origem que permite qualificar com maior detalhe o fato gerador dos ingressos das receitas. Por exemplo, dentro da Origem Receita Tributária, podemos identificar as espécies “impostos, taxas e contribuições de melhoria”. | "Impostos, Taxas e Contribuições de Melhoria"       |
+| Rúbrica                    | Texto         | A Rubrica busca identificar dentro de cada Espécie de receita, uma  qualificação mais específica. Agrega determinadas receitas com características próprias e semelhantes entre si.                                                                   | "Impostos"                                          |
+| Alínea                     | Texto         | Identifica o nome da receita propriamente dita, registrando a entrada de recursos financeiros.                                                                                                                                                        | "Impostos - Específicos de Estados/DF e Municípios" |
+| Detalhamento               | Texto         | Nível mais analítico em relação a classificação da natureza da receita.                                                                                                                                                                               | IPVA                                                |
+| Receita Prevista (Bruta)   | Numérico      | Registro dos valores da previsão inicial das receitas a serem arrecadadas em um ano e que devem constar na Lei Orçamentária Anual.                                                                                                                    | 100                                                 |
+| Receita Arrecadada (Bruta) | Numérico      | É a arrecadação de fato do valor, que o torna disponível nos cofres públicos para uso pelo Ente Federativo.                                                                                                                                           | 100                                                 |
+| Ano                        | Texto         | Ano que ocorreu a receita.                                                                                                                                                                                                                            | "2019"                                              |
+| Mês                        | Texto         | Mes que ocorreu a receita.                                                                                                                                                                                                                            | "01"                                                |
+
+### Dados de Saída de Licitações
+
+| Nome do Campo  | Tipo de Dados | Descrição                                                                                       | Exemplo                                                    |
+|----------------|---------------|-------------------------------------------------------------------------------------------------|------------------------------------------------------------|
+| numero         | Texto         | Identificador único da licitação.                                                               | "20250001"                                                 |
+| ano            | Texto         | Ano que ocorreu a licitação.                                                                    | "2019"                                                     |
+| processo       | Texto         | Número do processo vinculado a licitação.                                                       | "5100270007492024"                                         |
+| modalidade     | Texto         | Tipo de licitação conforme a legislação vigente (e.g., Pregão, Concorrência, Tomada de Preços). | "Pregão Eletrônico"                                        |
+| objeto         | Texto         | Descrição sucinta do objeto da licitação.                                                       | "Aquisição de materiais de escritório"                     |
+| situacao       | Texto         | Situação atual da licitação (e.g., Aberta, Em Andamento, Concluída, Cancelada).                 | "Aberta"                                                   |
+| valor          | Numérico      | Valor efetivamente adjudicado ao vencedor da licitação.                                         | 14500000                                                   |
+| orgao          | Texto         | Nome do orgão que realizou a licitação.                                                         | SEARH                                                      |
+| link_edital    | URL           | Endereço eletrônico para acesso ao edital da licitação.                                         | "http://servicos.searh.rn.gov.br/edital/PE_01_2025.pdf"    |
+| link_resultado | URL           | Endereço eletrônico para acesso ao resultado da licitação.                                      | "http://servicos.searh.rn.gov.br/resultado/PE_01_2025.pdf" |
 
 ## Análise de Dados
 
