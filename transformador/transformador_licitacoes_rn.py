@@ -19,7 +19,9 @@ class TransformadorLicitacoesRN:
             'CONTROL': 'ADMINISTRAÇÃO', # Controladoria Geral
             'GVG': 'ADMINISTRAÇÃO',     # Governadoria
             'ASSECOM': 'ADMINISTRAÇÃO', # Assessoria de Comunicação
-            
+            'SIN': 'ADMINISTRAÇÃO',  # Secretaria de Estado da Infraestrutura
+            'DER': 'ADMINISTRAÇÃO',  # Departamento de Estradas de Rodagem
+
             # AGRICULTURA
             'SEARA': 'AGRICULTURA',     # Secretaria de Agricultura
             'EMATER': 'AGRICULTURA',    # Empresa de Assistência Técnica Rural
