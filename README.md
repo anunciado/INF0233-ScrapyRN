@@ -72,7 +72,7 @@ flowchart TB
     ExternalSite -- Resposta --> Middleware
     Middleware -- <br> --> n3
     Spider -- Raspagem de HTML Bruto --> Parser
-    PersistStage -- Armazenar Item --> Storage["Storage (SQLite)"]
+    PersistStage -- Armazenar Item --> Storage["Banco de Dados (SQLite)"]
     Validate -- "<span style=color:>Limpar Arquivo</span>" --> PersistStage
     Scheduler --> n2
     n2 -- "<span style=color:>Requisição HTTP</span>" --> ExternalSite
