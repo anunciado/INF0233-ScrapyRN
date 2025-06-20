@@ -149,6 +149,18 @@ Embora não possuam licença explícita, a transparência destes dados é assegu
 ### Uso dos Dados
 Este projeto utiliza os dados exclusivamente para fins educacionais e de pesquisa acadêmica, respeitando os princípios de transparência e acesso à informação pública estabelecidos pela legislação vigente.
 
+## Dataset Limpo para Análise de Dados
+
+O projeto disponibiliza um dataset estruturado no arquivo `dados_rn.db`, que contém os dados de licitações e receitas do estado do Rio Grande do Norte já processados e limpos. Este arquivo é um dump do banco de dados SQLite que armazena as informações coletadas e transformadas pelo sistema.
+
+**Características do dataset:**
+- **Formato:** SQLite Database (.db)
+- **Conteúdo:** Dados de licitações e receitas públicas do RN
+- **Status:** Processado e estruturado
+- **Data de geração:** 19/06/2025
+
+O banco de dados pode ser acessado diretamente através de qualquer cliente SQLite ou por meio de código Python utilizando a biblioteca `sqlite3`.
+
 ## Contribuição:
 
 1. `Mova` a issue a ser resolvida para a coluna _In Progress_ no [board do projeto].  
