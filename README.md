@@ -47,6 +47,65 @@ playwright install
 python main.py
 ```
 
+## Fluxo de Execução
+
+```mermaid
+---
+config:
+  layout: dagre
+  look: neo
+---
+flowchart TB
+ subgraph subGraph1["Mecanismo de Raspagem"]
+        Spider["Rastreador de Licitações"]
+        Middleware["Download de Arquivo"]
+        Parser["Parser"]
+        n2@{ label: "<span style=\"background-color:\">Rastreador de Receitas</span>" }
+        ExternalSite["Buscar Token ao Acessar Site da Tranparência"]
+        n3["Transformar"]
+        n4["Persistir"]
+        Validate["Transformar"]
+        PersistStage["Persistir"]
+        n6["Criar Arquivo"]
+  end
+    Scheduler["Scrapy RN"] -- <br> --> Spider
+    ExternalSite -- Resposta --> Middleware
+    Middleware -- <br> --> n3
+    Spider -- Raspagem de HTML Bruto --> Parser
+    PersistStage -- Armazenar Item --> Storage["Storage (SQLite)"]
+    Validate -- "<span style=color:>Limpar Arquivo</span>" --> PersistStage
+    Scheduler --> n2
+    n2 -- "<span style=color:>Requisição HTTP</span>" --> ExternalSite
+    n3 -- "<span style=color:>Unir Arquivos</span>" --> n4
+    n4 -- "<span style=color:>Armazenar Item</span>" --> Storage
+    Parser -- "<span style=color:>Transforma em Arquivo .CSV</span>" --> n6
+    n6 -- <br> --> Validate
+    n2@{ shape: rect}
+    n3@{ shape: rect}
+    n4@{ shape: rect}
+    n6@{ shape: rect}
+     Spider:::network
+     Middleware:::network
+     Parser:::processing
+     Parser:::external
+     ExternalSite:::external
+     n3:::processing
+     n4:::storage
+     Validate:::processing
+     PersistStage:::storage
+     n6:::network
+     Scheduler:::network
+     Storage:::storage
+    classDef network fill:#ADD8E6,stroke:#333,stroke-width:1px
+    classDef processing fill:#90EE90,stroke:#333,stroke-width:1px
+    classDef storage fill:#FFD700,stroke:#333,stroke-width:1px
+    classDef config fill:#D8BFD8,stroke:#333,stroke-width:1px
+    classDef external fill:#D3D3D3, stroke:#333, stroke-width:1px
+    style Spider fill:#BBDEFB
+    style n2 fill:#BBDEFB
+    style Scheduler fill:#BBDEFB
+```
+
 ## Licença de uso e fontes dos dados
 
 ### Dados de Receitas
