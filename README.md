@@ -47,6 +47,24 @@ playwright install
 python main.py
 ```
 
+# Arquitetura Geral
+
+Rastreador de Licitações / Rastreador de Receitas ➞ Transformação ➞ SQLite
+
+1. **Rastreamento** – o mecanismo **Scrapy RN** possui dois rastreadores principais:
+   - **Rastreador de Licitações**: Realiza raspagem de HTML bruto em páginas de licitações.
+   - **Rastreador de Receitas**: Realiza requisições HTTP e busca token para acessar o site da transparência.
+
+2. **Transformação** – os dados brutos são processados em arquivos CSV:
+   - **Licitações** → Parser converte o HTML bruto em arquivo `.csv`.
+   - **Receitas** → Realiza o download de arquivos com os dados das respostas.
+
+3. **Limpeza e União** – arquivos são ajustados:
+   - **Licitações** → Limpeza e padronização dos dados.
+   - **Receitas** → União dos arquivos recebidos em um único arquivo processado.
+
+4. **Persistência (SQLite)** – Cada item processado é salvo/atualizado no banco de dados **SQLite**, que serve como camada de armazenamento local.
+
 ## Diagrama Resumido da Pipeline
 
 ```mermaid
